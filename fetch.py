@@ -23,23 +23,28 @@ fp.close()
 soup = BeautifulSoup(markup_str, "html.parser")
 jobs = soup.find_all("div", {"class": "jobblock block"})
 
-# Systems Analyst/Programmer will be the targets
-targets = ['human resources', 'manager']
+terms = ["human resources", "manager"]
+# terms = ["systems analyst", "programmer"]
 
+target_jobs = []
 for job in jobs:
-    job_title = job.get("data-title")
-    expiration = job.get("data-expires_at")
-    url = job.get("data-url")
-    
-    print(job_title)
-    print(expiration)
-    print(url)
-    
-    for target in targets:
-        if target in job_title.casefold():
-            print("target found")
-    
+    position = job.get("data-title")
+    for term in terms:
+        if term in position.casefold():
+            close_date = job.get("data-expires_at")
+            url = job.get("data-url")
+            metadata = {"position": position, "close_date": close_date, "url": url}
 
+            # ensure that only unique data is appended
+            if len(target_jobs) == 0:
+                target_jobs.append(metadata)
+            else:
+                for found_jobs in target_jobs:
+                    if url not in found_jobs.values():
+                        target_jobs.append(metadata)
+
+print(target_jobs)
+print(len(target_jobs))
 # check if target is in jobs list.
 # If yes, then retrieve data from div attributes, if no then do nothing.
 
