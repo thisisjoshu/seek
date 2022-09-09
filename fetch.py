@@ -1,13 +1,6 @@
 """
 a script to notify me when there are changes to a webpage. simple logic:
 
-- hash content of a webpage
-- after X period of time, hash the content of webpage again
-- if there is a change between the two hashes, notify me via email. 
-- if no change then wait for X period of time
-
-- extend script to *only* notify me of specific changes and don't notify me of irrelevant changes
-
 - ADD LOGGER FUNCTIONALITY
 """
 
@@ -47,4 +40,3 @@ print(target_jobs)
 print(len(target_jobs))
 # check if target is in jobs list.
 # If yes, then retrieve data from div attributes, if no then do nothing.
-
