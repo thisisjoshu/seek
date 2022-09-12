@@ -2,10 +2,25 @@
 a script to notify me when there are changes to a webpage. simple logic:
 
 - ADD LOGGER FUNCTIONALITY
+
+- make this easier to tailor to other sites etc
 """
 
+import logging
 import urllib.request
 from bs4 import BeautifulSoup
+
+
+formatter = logging.Formatter(
+    "%(asctime)s - %(levelname)s > %(message)s", datefmt="%d-%b-%Y %I:%M:%S %p"
+)
+
+handler = logging.FileHandler("./logs.log")
+handler.setFormatter(formatter)
+
+logger = logging.getLogger("summary")
+logger.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 
 fp = urllib.request.urlopen("https://piffa.applynow.net.au/")
@@ -36,7 +51,14 @@ for job in jobs:
                     if url not in found_jobs.values():
                         target_jobs.append(metadata)
 
-print(target_jobs)
-print(len(target_jobs))
-# check if target is in jobs list.
-# If yes, then retrieve data from div attributes, if no then do nothing.
+# print(target_jobs)
+# print(len(target_jobs))
+
+if len(target_jobs) > 0:
+    logger.info("Target job(s) found")
+    # TODO: send email notifying me about this
+    pass
+else:
+    # TODO: log that no jobs were found
+    logger.info("Target job(s) NOT found")
+    pass
