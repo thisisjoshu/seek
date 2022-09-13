@@ -68,7 +68,6 @@ def notify(target_jobs):
         logger.info("Target job(s) found")
 
         for job in target_jobs:
-            print(job)
             sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
             from_email = Email("joshuxbot@gmail.com")  # Change to your verified sender
             to_email = To("joshwhizkid@gmail.com")  # Change to your recipient
@@ -80,8 +79,12 @@ def notify(target_jobs):
             <br/>
             <p>Regards,</p>
             <p>Your favorite bot :)</p>
-            """ % (job["position"], job["close_date"], job["url"])
-            
+            """ % (
+                job["position"],
+                job["close_date"],
+                job["url"],
+            )
+
             content = Content("text/html", message)
             mail = Mail(from_email, to_email, subject, content)
 
