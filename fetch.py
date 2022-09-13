@@ -35,7 +35,6 @@ def search_for_target(jobs):
                 close_date = job.get("data-expires_at")
                 url = job.get("data-url")
                 metadata = {"position": position, "close_date": close_date, "url": url}
-
                 # ensure that only unique data is appended
                 if len(target_jobs) == 0:
                     target_jobs.append(metadata)
