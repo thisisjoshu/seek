@@ -2,6 +2,10 @@ import logging
 import urllib.request
 from bs4 import BeautifulSoup
 
+import sendgrid
+import os
+from sendgrid.helpers.mail import Mail, Email, To, Content
+
 
 def main():
     jobs = get_markup()
@@ -59,13 +63,24 @@ def search_for_target(jobs):
 
 def notify(target_jobs):
     logger = get_logger()
-    # print(target_jobs)
-    # print(len(target_jobs))
 
     if len(target_jobs) > 0:
         logger.info("Target job(s) found")
-        # TODO: send email notifying me about this
+        
+        sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+        from_email = Email("joshuxbot@gmail.com")  # Change to your verified sender
+        to_email = To("joshwhizkid@gmail.com")  # Change to your recipient
+        subject = "Sending with SendGrid is Fun"
+        content = Content("text/plain", "and easy to do anywhere, even with Python")
+        mail = Mail(from_email, to_email, subject, content)
 
+        # Get a JSON-ready representation of the Mail object
+        mail_json = mail.get()
+        # Send an HTTP POST request to /mail/send
+        response = sg.client.mail.send.post(request_body=mail_json)
+        print(response.status_code)
+        print(response.headers)
+        logger.info("Notification sent via email")
     else:
         logger.info("Target job(s) NOT found")
 
