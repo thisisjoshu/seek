@@ -2,7 +2,6 @@ import os
 import logging
 import sendgrid
 import urllib.request
-from time import sleep
 from bs4 import BeautifulSoup
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
