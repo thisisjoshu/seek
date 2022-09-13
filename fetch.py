@@ -54,21 +54,7 @@ def notify(target_jobs):
             from_email = Email(os.environ.get("SENDER"))
             to_email = To(os.environ.get("RECIPIENT"))
             subject = "Job Vacancy Found!!"
-            message = """
-            <p>Hi %s,</p>
-            <br/>
-            <p>Great News!</p>
-            <p>There is a vacancy for <b>%s</b> at FFA. This vacancy will be closed on <i>%s</i>. 
-            More information can be found <a href="%s">here</a>.</p>
-            <br/>
-            <p>Cheers,</p>
-            <p>Your favorite bot :)</p>
-            """ % (
-                os.environ.get("NAME"),
-                job["position"],
-                convert_date_format(job["close_date"]),
-                job["url"],
-            )
+            message = get_found_message(job)
             content = Content("text/html", message)
             mail = Mail(from_email, to_email, subject, content)
 
@@ -81,21 +67,11 @@ def notify(target_jobs):
             print("Notification sent via email")
     else:
         print("Target job(s) NOT found")
-        
+
         from_email = Email(os.environ.get("SENDER"))
         to_email = To(os.environ.get("RECIPIENT"))
         subject = "No Jobs Found :("
-        message = """
-        <p>Hi %s,</p>
-        <br/>
-        <p>Unfortunately, no relevant vacancies were found on the FFA website. 
-        I will check again next month! ;)</p>
-        <br/>
-        <p>Cheers,</p>
-        <p>Your favorite bot :)</p>
-        """ % (
-            os.environ.get("NAME")
-        )
+        message = get_not_found_message()
         content = Content("text/html", message)
         mail = Mail(from_email, to_email, subject, content)
 
@@ -106,6 +82,40 @@ def notify(target_jobs):
         print(response.status_code)
         print(response.headers)
         print("Notification sent via email")
+
+
+def get_found_message(job):
+    message = """
+    <p>Hi %s,</p>
+    <br/>
+    <p>Great News!</p>
+    <p>There is a vacancy for <b>%s</b> at FFA. This vacancy will be closed on <i>%s</i>. 
+    More information can be found <a href="%s">here</a>.</p>
+    <br/>
+    <p>Cheers,</p>
+    <p>Your favorite bot :)</p>
+    """ % (
+        os.environ.get("NAME"),
+        job["position"],
+        convert_date_format(job["close_date"]),
+        job["url"],
+    )
+    return message
+
+
+def get_not_found_message():
+    message = """
+    <p>Hi %s,</p>
+    <br/>
+    <p>Unfortunately, no relevant vacancies were found on the FFA website. 
+    I will check again next month! ;)</p>
+    <br/>
+    <p>Cheers,</p>
+    <p>Your favorite bot :)</p>
+    """ % (
+        os.environ.get("NAME")
+    )
+    return message
 
 
 def convert_date_format(datetime_str):
