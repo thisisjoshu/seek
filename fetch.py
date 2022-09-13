@@ -66,21 +66,32 @@ def notify(target_jobs):
 
     if len(target_jobs) > 0:
         logger.info("Target job(s) found")
-        
-        sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-        from_email = Email("joshuxbot@gmail.com")  # Change to your verified sender
-        to_email = To("joshwhizkid@gmail.com")  # Change to your recipient
-        subject = "Sending with SendGrid is Fun"
-        content = Content("text/plain", "and easy to do anywhere, even with Python")
-        mail = Mail(from_email, to_email, subject, content)
 
-        # Get a JSON-ready representation of the Mail object
-        mail_json = mail.get()
-        # Send an HTTP POST request to /mail/send
-        response = sg.client.mail.send.post(request_body=mail_json)
-        print(response.status_code)
-        print(response.headers)
-        logger.info("Notification sent via email")
+        for job in target_jobs:
+            print(job)
+            sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
+            from_email = Email("joshuxbot@gmail.com")  # Change to your verified sender
+            to_email = To("joshwhizkid@gmail.com")  # Change to your recipient
+            subject = "Job Vacancy Found!!"
+            message = """
+            <p>Hi Joshua,</p>
+
+            <p>There is a vacancy for %s at FFA. This vacancy will be closed on %s. More information can be found <a href="%s">here</a>.</p>
+            <br/>
+            <p>Regards,</p>
+            <p>Your favorite bot :)</p>
+            """ % (job["position"], job["close_date"], job["url"])
+            
+            content = Content("text/html", message)
+            mail = Mail(from_email, to_email, subject, content)
+
+            # Get a JSON-ready representation of the Mail object
+            mail_json = mail.get()
+            # Send an HTTP POST request to /mail/send
+            response = sg.client.mail.send.post(request_body=mail_json)
+            print(response.status_code)
+            print(response.headers)
+            logger.info("Notification sent via email")
     else:
         logger.info("Target job(s) NOT found")
 
