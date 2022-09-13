@@ -1,5 +1,4 @@
 import os
-# import logging
 import sendgrid
 import urllib.request
 from bs4 import BeautifulSoup
@@ -47,10 +46,7 @@ def search_for_target(jobs):
 
 
 def notify(target_jobs):
-    # logger = get_logger()
-
     if len(target_jobs) > 0:
-        # logger.info("Target job(s) found")
         print("Target job(s) found!")
 
         for job in target_jobs:
@@ -80,26 +76,9 @@ def notify(target_jobs):
             response = sg.client.mail.send.post(request_body=mail_json)
             print(response.status_code)
             print(response.headers)
-            # logger.info("Notification sent via email")
             print("Notification sent via email")
     else:
-        # logger.info("Target job(s) NOT found")
         print("Target job(s) NOT found")
-
-
-# def get_logger():
-#     formatter = logging.Formatter(
-#         "%(asctime)s - %(levelname)s > %(message)s", datefmt="%d-%b-%Y %I:%M:%S %p"
-#     )
-
-#     handler = logging.FileHandler("./logs.log")
-#     handler.setFormatter(formatter)
-
-#     logger = logging.getLogger("summary")
-#     logger.setLevel(logging.INFO)
-#     logger.addHandler(handler)
-#     return logger
-
 
 if __name__ == "__main__":
     main()
