@@ -8,11 +8,9 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
 def main():
-    while True: 
-        jobs = get_markup()
-        target_jobs = search_for_target(jobs)
-        notify(target_jobs)
-        sleep(10)
+    jobs = get_markup()
+    target_jobs = search_for_target(jobs)
+    notify(target_jobs)
 
 
 def get_markup():
