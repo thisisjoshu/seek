@@ -24,7 +24,6 @@ def get_markup():
 
 
 def search_for_target(jobs):
-    # terms = ["human resources", "manager"]
     terms = ["systems analyst", "programmer"]
 
     target_jobs = []
