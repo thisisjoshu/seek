@@ -13,7 +13,7 @@ def lambda_handler(event, context):
 
 
 def get_markup():
-    fp = urllib.request.urlopen("https://piffa.applynow.net.au/")
+    fp = urllib.request.urlopen(os.environ.get("SITE"))
     markup_bytes = fp.read()
     markup_str = markup_bytes.decode("utf8")
     fp.close()
@@ -24,8 +24,8 @@ def get_markup():
 
 
 def search_for_target(jobs):
-    terms = ["human resources", "manager"]
-    # terms = ["systems analyst", "programmer"]
+    # terms = ["human resources", "manager"]
+    terms = ["systems analyst", "programmer"]
 
     target_jobs = []
     for job in jobs:
