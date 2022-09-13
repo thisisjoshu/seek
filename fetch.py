@@ -1,30 +1,18 @@
-import logging
-import urllib.request
-from bs4 import BeautifulSoup
-
-import sendgrid
 import os
+import logging
+import sendgrid
+import urllib.request
+from time import sleep
+from bs4 import BeautifulSoup
 from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
 def main():
-    jobs = get_markup()
-    target_jobs = search_for_target(jobs)
-    notify(target_jobs)
-
-
-def get_logger():
-    formatter = logging.Formatter(
-        "%(asctime)s - %(levelname)s > %(message)s", datefmt="%d-%b-%Y %I:%M:%S %p"
-    )
-
-    handler = logging.FileHandler("./logs.log")
-    handler.setFormatter(formatter)
-
-    logger = logging.getLogger("summary")
-    logger.setLevel(logging.INFO)
-    logger.addHandler(handler)
-    return logger
+    while True: 
+        jobs = get_markup()
+        target_jobs = search_for_target(jobs)
+        notify(target_jobs)
+        sleep(10)
 
 
 def get_markup():
@@ -75,7 +63,7 @@ def notify(target_jobs):
             message = """
             <p>Hi Joshua,</p>
 
-            <p>There is a vacancy for %s at FFA. This vacancy will be closed on %s. More information can be found <a href="%s">here</a>.</p>
+            <p>There is a vacancy for %s at FFA. This vacancy will be closed on <i>%s</i>. More information can be found <a href="%s">here</a>.</p>
             <br/>
             <p>Regards,</p>
             <p>Your favorite bot :)</p>
@@ -97,6 +85,20 @@ def notify(target_jobs):
             logger.info("Notification sent via email")
     else:
         logger.info("Target job(s) NOT found")
+
+
+def get_logger():
+    formatter = logging.Formatter(
+        "%(asctime)s - %(levelname)s > %(message)s", datefmt="%d-%b-%Y %I:%M:%S %p"
+    )
+
+    handler = logging.FileHandler("./logs.log")
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger("summary")
+    logger.setLevel(logging.INFO)
+    logger.addHandler(handler)
+    return logger
 
 
 if __name__ == "__main__":
