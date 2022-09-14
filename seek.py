@@ -13,6 +13,7 @@ def lambda_handler(event, context):
 
 
 def get_markup():
+    """Requests HTML from webpage, specifically tag that holds list of jobs"""
     fp = urllib.request.urlopen(os.environ.get("SITE"))
     markup_bytes = fp.read()
     markup_str = markup_bytes.decode("utf8")
@@ -24,6 +25,7 @@ def get_markup():
 
 
 def search_for_target(jobs):
+    """Goes through HTML to look for keywords"""
     terms = ["systems analyst", "programmer"]
 
     target_jobs = []
@@ -45,6 +47,7 @@ def search_for_target(jobs):
 
 
 def notify(target_jobs):
+    """Creates and sends email to recipient about the result of the search"""
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
     if len(target_jobs) > 0:
         print("Target job(s) found!")
@@ -117,6 +120,7 @@ def get_not_found_message():
 
 
 def convert_date_format(datetime_str):
+    """Helper function that changes the date format of date"""
     dto = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S %z")
     # convert = datetime.strftime(dto, '%d-%B-%Y %H:%M:%S')
     convert = datetime.strftime(dto, "%c")
