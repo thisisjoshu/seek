@@ -8,7 +8,7 @@ Seek is a simple tool that periodically checks a webpage for specific keywords. 
 Simply install requirements with:
 
 ```
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
 Ensure that the environment variables are set to your preference then it should be good to go!
