@@ -1,12 +1,23 @@
-# get-me-a-job
+# Seek
 
-a script to notify me when there are changes to a webpage. simple logic:
-
-- hash content of a webpage
-- after X period of time, hash the content of webpage again
-- if there is a change between the two hashes, notify me via email. 
-- if no change then wait for X period of time
+Seek is a simple tool that periodically checks a webpage for specific keywords. I was urged to keep checking a website for specific job vacancies. That wasn't going to happen so I went ahead and wrote a simple script to do the checking for me and notify me via email if a relevant job vacancy is found or not. The live version of *Seek* is hosted on AWS Lambda so you will find that the repository is tailored to suit Lambda. 
 
 
-going forward:
-- extend script to *only* notify me of specific changes and don't notify me of irrelevant changes
+### Prerequisites & Installing
+
+Simply install requirements with:
+
+```
+pip install -r requirements
+```
+
+Ensure that the environment variables are set to your preference then it should be good to go!
+
+
+## Built With
+
+* [Sendgrid](https://app.sendgrid.com/) - Email API
+
+## Authors
+
+* **Joshua Zobule** - [thisisjoshu](https://github.com/thisisjoshu)
