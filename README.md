@@ -1,6 +1,6 @@
 # Seek
 
-Seek is a simple tool that periodically checks a webpage for specific keywords. I was urged to keep checking a website for specific job vacancies and I knew that I would always forget to. So I went ahead and wrote a simple script to do the checking for me and subsequently notify me via email if a relevant job vacancy is found or not. The live version of *Seek* is hosted on AWS Lambda so you will notice that this repository and the code is tailored to suit Lambda. 
+Seek is a simple tool that periodically checks a webpage for specific keywords. I was urged to keep checking a website for specific job vacancies and I knew that I would always forget to. So I went ahead and wrote a simple script to do the checking for me and subsequently notify me via email if a relevant job vacancy is found or not. The live version of *Seek* is hosted on AWS Lambda so you will notice that this repository and the code is tailored to suit Lambda. This can be modified to fit any website although some adjustments to the code will be necessary to fit the HTML of the target website. 
 
 
 ### Prerequisites & Installing
