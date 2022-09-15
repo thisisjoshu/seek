@@ -51,6 +51,7 @@ def notify(target_jobs):
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
     if len(target_jobs) > 0:
         print("Target job(s) found!")
+        
         for job in target_jobs:
             from_email = Email(os.environ.get("SENDER"))
             to_email = To(os.environ.get("RECIPIENT"))
